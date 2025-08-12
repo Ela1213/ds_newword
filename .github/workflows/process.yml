@@ -27,8 +27,8 @@ jobs:
     - name: Run word processor
       env:
         DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
-        BATCH_SIZE: 8  # 每批处理8个词
-        MAX_RETRIES: 5  # 最大重试次数
+        BATCH_SIZE: 50  # 每批处理50个词
+        MAX_RETRIES: 3  # 最大重试次数
       run: |
         python src/process_words.py
         
