@@ -8,7 +8,7 @@ from openai import OpenAI
 from tenacity import retry, stop_after_attempt, wait_random_exponential
 
 # 从环境变量获取API密钥
-DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
+DEEPSEEK_API_KEY = os.getenv("sk-361e0bdd2ce541a29c713c9a6e550009")
 BATCH_SIZE = int(os.getenv("BATCH_SIZE", "50"))  # 默认批次大小
 MAX_RETRIES = int(os.getenv("MAX_RETRIES", "3"))  # 默认重试次数
 
