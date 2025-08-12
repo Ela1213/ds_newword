@@ -2,15 +2,33 @@ import os
 import re
 import time
 import json
-import csv
 import pandas as pd
 from openai import OpenAI
 from tenacity import retry, stop_after_attempt, wait_random_exponential
 
+# 添加环境变量处理
+import sys
+import logging
+
+# 配置日志
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.StreamHandler(sys.stdout)
+    ]
+)
+logger = logging.getLogger(__name__)
+
 # 从环境变量获取API密钥
-DEEPSEEK_API_KEY = os.getenv("sk-361e0bdd2ce541a29c713c9a6e550009")
-BATCH_SIZE = int(os.getenv("BATCH_SIZE", "50"))  # 默认批次大小
-MAX_RETRIES = int(os.getenv("MAX_RETRIES", "3"))  # 默认重试次数
+DEEPSEEK_API_KEY = os.getenv("DEEPSEEK_API_KEY")
+if not DEEPSEEK_API_KEY:
+    logger.error("DeepSeek API密钥未设置! 请通过环境变量DEEPSEEK_API_KEY提供")
+    sys.exit(1)
+
+# 其他配置
+BATCH_SIZE = int(os.getenv("BATCH_SIZE", "20"))
+MAX_RETRIES = int(os.getenv("MAX_RETRIES", "3"))
 
 # 初始化DeepSeek客户端
 client = OpenAI(
