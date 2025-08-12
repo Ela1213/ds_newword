@@ -50,3 +50,11 @@ jobs:
         name: final-results
         path: final_results.csv
         retention-days: 30
+        
+    - name: Send notification
+      if: always()  # 无论成功失败都通知
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+        SLACK_COLOR: ${{ job.status }}  # 根据状态变色
+        SLACK_MESSAGE: "DeepSeek处理完成! 状态: ${{ job.status }}"
